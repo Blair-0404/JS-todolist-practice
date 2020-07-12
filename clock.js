@@ -1,5 +1,4 @@
-const clockContainer = document.querySelector('.js-clock'),
-  clockTitle = document.querySelector('h1');
+const clockTitle = document.querySelector('h1');
 
 function addZero(time) {
   return time < 10 ? `0${time}` : time

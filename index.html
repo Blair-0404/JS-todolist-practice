@@ -6,15 +6,21 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TODO LIST</title>
-</head>
+  <link rel="stylesheet" type="text/css" href="index.css"></head>
 <body>
 <div class="container">
   <div class="center-box">
     <div class="js-clock">
       <h1>00:00:00</h1>
     </div>
+
+    <form class="js-todoForm">
+      <input class="todo-input-box" type="text" placeholder="write a to do">
+    </form>
+    <ul class="js-todoList"></ul>
   </div>
 </div>
 <script src="clock.js"></script>
+<script src="todo.js"></script>
 </body>
 </html>

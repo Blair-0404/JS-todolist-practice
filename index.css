@@ -1,0 +1,29 @@
+.center-box {
+  margin: auto;
+  width:500px;
+  background-color: antiquewhite;
+}
+
+.todo-input-box {
+  border: 1px darkgrey solid;
+  border-radius: 5px;
+  width:90%;
+}
+
+.js-todoList {
+  border: 1px #ffd498 solid ;
+  border-radius: 5px;
+}
+.todo-li {
+  display: flex;
+  flex-direction: row;
+}
+.todo-div {
+  width:70%;
+  margin: 5px;
+}
+
+.todo-del-btn {
+  border: none;
+  background-color: white;
+}
