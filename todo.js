@@ -2,87 +2,85 @@ const form = document.querySelector('.js-todoForm'),
   todoInput = document.querySelector('.todo-input-box'),
   todoList = document.querySelector('.js-todoList');
 
-let todosArr = [];
-const TODOS_LOCALSTORAGE = 'todos';
+const TODOS_LOCALSTORAGE = 'todos'; // localStorage key
+let todosArr = []; // 이 배열이 변경될때마다 항상 localStorage 에도 반영되야함
 
 function showTodoList(value) {
   const li = document.createElement('li');
   li.classList.add('todo-li');
 
-  addTodo(li, value);
-  deleteTodo(li);
-  updateLocalstorage(todosArr);
+  createAddRole(li, value);
+  createDelRole(li);
+  // updateLocalstorage(todosArr);
 }
 
-// 할일추가
-function addTodo(li, inputValue) {
+// 할일 추가 기능
+function createAddRole(li, inputValue) {
   const div = document.createElement('div');
-  div.classList.add('todo-div');
-
-  div.innerText = `✔ ${inputValue}`;
-  li.appendChild(div);
-  todoList.appendChild(li);
-  todoInput.value = '';
-
-  pushTodoToLocalStorage(inputValue, li)
-}
-
-function pushTodoToLocalStorage(inputValue, li) {
   const todoObj = {
     id: todosArr.length + 1,
     value: inputValue
   };
 
-  todosArr.push(todoObj);
+  // 태크생성 후 값 넣기
+  div.classList.add('todo-div');
+  div.innerText = `✔ ${inputValue}`;
   li.classList.add(todoObj.id);
+  li.appendChild(div);
+  todoList.appendChild(li);
+  todoInput.value = '';
+
+  // todoArr 에도 할일추가
+  todosArr.push(todoObj);
+
+  // localStorage 에 변경된 todosArr 반영
+  updateLocalstorage(todosArr);
 }
 
-// 할일 삭제
-function deleteTodo(li) {
+// 할일 삭제 기능
+function createDelRole(li) {
   const delBtn = document.createElement('button');
-  delBtn.classList.add('todo-del-btn');
+  const idOfLi = parseInt(li.classList[1]);
 
+  // 삭제버튼 생성
+  delBtn.classList.add('todo-del-btn');
   delBtn.innerText = "✘";
   li.appendChild(delBtn);
-  const idOfLi = li.classList[1];
 
+  // 삭제버튼 클릭 이벤트 달기
   delBtn.addEventListener('click', () => {
 
+    // 할일태그 삭제
     todoList.removeChild(li);
-    delTodoInTodosArr(idOfLi);
-
-    const parsedTodos = JSON.parse(localStorage.getItem(TODOS_LOCALSTORAGE))
+    // localStorage 값 꺼내오기
+    const parsedTodos = JSON.parse(localStorage.getItem(TODOS_LOCALSTORAGE));
+    // 삭제된 할일을 localStorage 값 에서도 삭제해주기
     parsedTodos.forEach((val, idx) => {
-      if(parseInt(val.id) === idOfLi) {
-        parsedTodos.splice(idx,1)
-        console.log(parsedTodos)
+      if (parseInt(val.id) === idOfLi) {
+        parsedTodos.splice(idx, 1);
       }
     });
+    // todosArr도 삭제된것 반영
     todosArr = parsedTodos;
-    updateLocalstorage(todosArr)
+    // localStorage 에 변경된 todosArr 반영
+    updateLocalstorage(parsedTodos)
   });
 }
 
-function delTodoInTodosArr(idOfLi) {
-  todosArr.forEach((val, idx) => {
-    if (val.id === idOfLi) {
-      console.log('d')
-
-      todosArr.splice(idx, 1);
-    }
-  });
-}
-
+// todosArr 이 변경됨에따라 localStorage 에도 반영
 function updateLocalstorage(todosArr) {
-  const stringfiedTodos = JSON.stringify(todosArr);
+  const stringfiedTodosArr = JSON.stringify(todosArr);
 
-  localStorage.setItem(TODOS_LOCALSTORAGE, stringfiedTodos)
+  localStorage.setItem(TODOS_LOCALSTORAGE, stringfiedTodosArr)
 }
 
+// 페이지 열때 localStorage 값 가져와서 브라우저에 반영해주기
 function loadLocalstorageTodos() {
-  if(localStorage.getItem(TODOS_LOCALSTORAGE)) {
+  if (localStorage.getItem(TODOS_LOCALSTORAGE)) {
     const parsedTodos = JSON.parse(localStorage.getItem(TODOS_LOCALSTORAGE));
-    parsedTodos.forEach((todo) => showTodoList(todo.value))
+    parsedTodos.forEach((todo) => {
+      showTodoList(todo.value)
+    })
   }
 }
 
@@ -92,8 +90,6 @@ function init() {
     e.preventDefault();
     showTodoList(todoInput.value)
   });
-
-  console.log('하이')
 }
 
 init();
