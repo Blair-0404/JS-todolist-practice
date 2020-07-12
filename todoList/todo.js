@@ -8,10 +8,10 @@ let todosArr = []; // 이 배열이 변경될때마다 항상 localStorage 에�
 function showTodoList(value) {
   const li = document.createElement('li');
   li.classList.add('todo-li');
+  li.setAttribute('draggable', 'true');
 
   createAddRole(li, value);
   createDelRole(li);
-  // updateLocalstorage(todosArr);
 }
 
 // 할일 추가 기능
