@@ -1,0 +1,35 @@
+* {
+  background-color: #ffd457;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+}
+
+.lists-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.list {
+  width: 300px;
+  height: 100vw;
+  /*border: 1px solid darkgrey;*/
+  border-radius: 3px;
+  background-color: #bcad81;
+  margin: 10px;
+  padding: 5px;
+  text-align: center;
+}
+
+.list-item {
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.list-item:not(:last-child) {
+  margin-bottom: 5px;
+}
